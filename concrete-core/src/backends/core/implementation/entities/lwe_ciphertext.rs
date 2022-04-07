@@ -34,3 +34,78 @@ impl LweCiphertextEntity for LweCiphertext64 {
         self.0.lwe_size().to_lwe_dimension()
     }
 }
+
+// Views are here as there is no specification for them, as they are just LweCiphertext entities
+// that do not own their memory
+
+/// A structure representing an LWE ciphertext view, that does not own its memory, with 32 bits
+/// of precision. This view is not Clone as Clone for a slice is not defined. It is not
+/// Deserialize either, as Deserialize of a slice is not defined. Immutable variant.
+#[cfg_attr(feature = "serde_serialize", derive(Serialize))]
+#[derive(Debug, PartialEq, Eq)]
+pub struct LweCiphertextView32<'a>(pub(crate) ImplLweCiphertext<&'a [u32]>);
+
+impl AbstractEntity for LweCiphertextView32<'_> {
+    type Kind = LweCiphertextKind;
+}
+impl LweCiphertextEntity for LweCiphertextView32<'_> {
+    type KeyDistribution = BinaryKeyDistribution;
+
+    fn lwe_dimension(&self) -> LweDimension {
+        self.0.lwe_size().to_lwe_dimension()
+    }
+}
+
+/// A structure representing an LWE ciphertext view, that does not own its memory, with 32 bits
+/// of precision. This view is not Clone as Clone for a mutable slice is not defined. It is not
+/// Deserialize either, as Deserialize of a slice is not defined. Mutable variant.
+#[cfg_attr(feature = "serde_serialize", derive(Serialize))]
+#[derive(Debug, PartialEq, Eq)]
+pub struct LweCiphertextMutView32<'a>(pub(crate) ImplLweCiphertext<&'a mut [u32]>);
+
+impl AbstractEntity for LweCiphertextMutView32<'_> {
+    type Kind = LweCiphertextKind;
+}
+impl LweCiphertextEntity for LweCiphertextMutView32<'_> {
+    type KeyDistribution = BinaryKeyDistribution;
+
+    fn lwe_dimension(&self) -> LweDimension {
+        self.0.lwe_size().to_lwe_dimension()
+    }
+}
+
+/// A structure representing an LWE ciphertext view, that does not own its memory, with 64 bits
+/// of precision. This view is not Clone as Clone for a slice is not defined. It is not
+/// Deserialize either, as Deserialize of a slice is not defined. Immutable variant.
+#[cfg_attr(feature = "serde_serialize", derive(Serialize))]
+#[derive(Debug, PartialEq, Eq)]
+pub struct LweCiphertextView64<'a>(pub(crate) ImplLweCiphertext<&'a [u64]>);
+
+impl AbstractEntity for LweCiphertextView64<'_> {
+    type Kind = LweCiphertextKind;
+}
+impl LweCiphertextEntity for LweCiphertextView64<'_> {
+    type KeyDistribution = BinaryKeyDistribution;
+
+    fn lwe_dimension(&self) -> LweDimension {
+        self.0.lwe_size().to_lwe_dimension()
+    }
+}
+
+/// A structure representing an LWE ciphertext view, that does not own its memory, with 64 bits
+/// of precision. This view is not Clone as Clone for a mutable slice is not defined. It is not
+/// Deserialize either, as Deserialize of a slice is not defined. Mutable variant.
+#[cfg_attr(feature = "serde_serialize", derive(Serialize))]
+#[derive(Debug, PartialEq, Eq)]
+pub struct LweCiphertextMutView64<'a>(pub(crate) ImplLweCiphertext<&'a mut [u64]>);
+
+impl AbstractEntity for LweCiphertextMutView64<'_> {
+    type Kind = LweCiphertextKind;
+}
+impl LweCiphertextEntity for LweCiphertextMutView64<'_> {
+    type KeyDistribution = BinaryKeyDistribution;
+
+    fn lwe_dimension(&self) -> LweDimension {
+        self.0.lwe_size().to_lwe_dimension()
+    }
+}
